@@ -5,7 +5,15 @@ const Constraint = Matter.Constraint;
 
 var engine,world;
 var polygon1,ground1,ball1,ball2,ball3,ball4,ball5,ball6,ball7,ball8,ball9,ball10,ball11,ball12,ball13,ball14,ball15,ball16;
-var ground2,ground3,ball17,ball18,ball19,ball20,ball21,ball22,ball23,ball24,ball25,chain1;
+var ground2,ground3,ball17,ball18,ball19,ball20,ball21,ball22,ball23,ball24,ball25,chain1,backgroundImage;
+
+
+function preload(){
+
+  backgroundImage = loadImage("white.png");
+  getBackgroundImage();
+
+}
 
 
 function setup() {
@@ -53,7 +61,7 @@ function setup() {
 
 function draw() {
   rectMode(CENTER);
-  background("skyblue");
+  background(backgroundImage);
   Engine.update(engine);
  
   
@@ -99,3 +107,21 @@ function mouseReleased(){
   chain1.fly();
 }
 
+async  function getBackgroundImage(){
+
+   var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
+   var result = await response.json();
+   var datetime = result.datetime;
+   var hour = datetime.slice(11,13);
+   console.log(hour);
+   
+   if(hour>18 || hour<6){
+
+    backgroundImage = loadImage("black.png");
+
+   }
+   else{
+    backgroundImage = loadImage("white.png");
+   }
+
+ }
